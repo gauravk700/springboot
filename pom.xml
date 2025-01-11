@@ -13,6 +13,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springboot</name>
 	<description>Demo project for Spring Boot</description>
+
+<!--	<modules>-->
+<!--		<module>movieService</module>-->
+<!--		<module>userService</module>-->
+<!--		<module>eureka-server</module>-->
+<!--		<module>emailService</module>-->
+<!--		<module>api-gateway</module>-->
+<!--	</modules>-->
+
 	<url/>
 	<licenses>
 		<license/>
@@ -55,6 +64,11 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-security</artifactId>
+				</dependency>
 	</dependencies>
 
 	<build>
