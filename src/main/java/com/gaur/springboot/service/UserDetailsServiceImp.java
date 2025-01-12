@@ -2,7 +2,7 @@ package com.gaur.springboot.service;
 
 import com.gaur.springboot.model.Users;
 import com.gaur.springboot.model.UserPrincipal;
-import com.gaur.springboot.repository.UserRepo;
+import com.gaur.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
-    public UserRepo userRepo;
+    public UserRepository userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
