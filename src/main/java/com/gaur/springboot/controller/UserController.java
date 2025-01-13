@@ -17,7 +17,7 @@ public class UserController {
     private UserDetailsServiceImp userDetailsServiceImp;
 
     @Autowired
-    private UserService securityService;
+    private UserService userService;
 
     @GetMapping("sessionId")
     public String getSessionId(HttpServletRequest httpServletRequest){
@@ -29,14 +29,20 @@ public class UserController {
         return (CsrfToken) httpServletRequest.getAttribute("_csrf");
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public Users register(@RequestBody Users users){
-            return securityService.createUser(users);
+            return userService.createUser(users);
     }
 
-    @GetMapping("allUsers")
+    @GetMapping("/allUsers")
     public List<Users> getUsers(){
-        return securityService.getAllUsers();
+        return userService.getAllUsers();
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Users users){
+        System.out.println(users);
+        return userService.verify(users);
     }
 
 }
