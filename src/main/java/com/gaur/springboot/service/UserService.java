@@ -7,10 +7,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 @Service
 public class UserService {
@@ -24,23 +24,25 @@ public class UserService {
     @Autowired
     private JwtService jwtService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public List<Users> getAllUsers(){
+    public List<Users> getAllUsers() {
         return userRepo.findAll();
     }
 
-    public Users createUser(Users user){
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+    public Users createUser(Users user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
     public String verify(Users users) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(users.getUsername(), users.getPassword()));
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(users.getUsername(), users.getPassword()));
 
-        if(authentication.isAuthenticated()){
+        if (authentication.isAuthenticated()) {
             return jwtService.generateToken(users.getUsername());
         }
-        return "Failed";
+        throw new RuntimeException("invalid credential");
     }
 }
